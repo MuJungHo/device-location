@@ -25,7 +25,7 @@ const BasicProperties = ({
   const handleDeleteLayer = () => {
     let _layers = layers.filter(layer => layer.id !== activeLayer.id)
     setLayers(_layers)
-    
+
     let _devices = [...devices]
     _devices.push({ ...activeLayer, ["Location X"]: "", ["Location Y"]: "" })
 
@@ -70,7 +70,8 @@ const BasicProperties = ({
           }
         </Select>
       </FormControl>
-
+      <h3 style={{ marginBottom: 20 }}>Name: {activeLayer.Name}</h3>
+      <h3 style={{ marginBottom: 20 }}>Panel: {activeLayer.Panel}</h3>
       <Button color="primary" variant="outlined" onClick={handleDeleteLayer}>刪除</Button>
     </React.Fragment>
   )
@@ -97,12 +98,12 @@ export default ({
   setImportJson
 }) => {
   const activeLayer = layers.find(layer => layer.id === activeLayerID) || null
-  // console.log(activeLayerID)
+  console.log(activeLayer)
   return (
     <div style={{
       width: 380,
       height: 'calc(100vh - 80px)',
-      backgroundColor: '#f1f3f7',
+      backgroundColor: 'white',
       padding: 20
     }}>
       <h2 style={{ marginBottom: 20 }}>{`Devices: ${layers.length}/${devices.length + layers.length}`}</h2>

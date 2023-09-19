@@ -93,12 +93,12 @@ export default ({
       backgroundColor: '#f1f3f7',
       display: 'flex',
       alignItems: 'center',
-      padding: '0 20px'
+      paddingLeft: 20
     }}>
       <h1>FAIMIS</h1>
       <div style={{ flex: 1 }}></div>
       <input
-        accept="xlsx"
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         style={{ display: 'none' }}
         id="contained-button-xlsx"
         // multiple
@@ -106,28 +106,30 @@ export default ({
         type="file"
       />
       <input
-        accept="png"
+        accept="image/png"
         style={{ display: 'none' }}
         id="contained-button-png"
         multiple
         onChange={handleUploadPNG}
         type="file"
       />
-      <div>
-        <TextField variant='outlined' size="small" label="搜尋設備" value={searchDevice} onChange={e => setSearchDevice(e.target.value)} />
-        <Button color="primary" variant="outlined" onClick={handleExportXLSX}>
-          下載XLSX
-        </Button>
+      <TextField variant='outlined' size="small" label="搜尋設備" value={searchDevice} onChange={e => setSearchDevice(e.target.value)} />
+
+      <div style={{ width: 360, display: 'flex', justifyContent: 'space-around' }}>
+
         <label htmlFor="contained-button-xlsx">
           <Button color="primary" variant="outlined" component="span">
-            上傳XLSX
+            上傳設備
           </Button>
         </label>
         <label htmlFor="contained-button-png">
           <Button color="primary" variant="outlined" component="span">
-            上傳PNG
+            上傳樓層
           </Button>
         </label>
+        <Button color="primary" variant="contained" onClick={handleExportXLSX}>
+          下載XLSX
+        </Button>
       </div>
       {/* <IconButton style={{ marginRight: 10 }} onClick={exportJsonFile}><CloudDownloadIcon /></IconButton> */}
     </div>
