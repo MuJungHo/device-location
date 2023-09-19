@@ -147,7 +147,6 @@ export default () => {
                 value={addLayer["Location Y"] || ""}
               />
             </div>
-
             <FormControl variant="outlined" fullWidth>
               <InputLabel>Device</InputLabel>
               <Select
@@ -161,7 +160,7 @@ export default () => {
               >
                 {
                   devices.map(option => <MenuItem
-                    key={option.Device}
+                    key={option.id}
                     value={option.Device}>
                     {option.Device}
                   </MenuItem>)
@@ -242,7 +241,11 @@ export default () => {
           layers={layers}
           setLayers={setLayers}
           activeLayerID={activeLayerID}
+          setActiveLayerID={setActiveLayerID}
           devices={devices}
+          setDevices={setDevices}
+          importJson={importJson}
+          setImportJson={setImportJson}
         />
       </div>
     </div>

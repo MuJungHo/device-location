@@ -4,12 +4,38 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Button
 } from '@material-ui/core'
 
-const BasicProperties = ({ activeLayer, devices }) => {
+const BasicProperties = ({
+  activeLayer,
+  devices,
+  setLayers,
+  setActiveLayerID,
+  setDevices,
+  layers,
+  importJson,
+  setImportJson,
+  board
+}) => {
   // console.log(devices, activeLayer)
   var options = [{ ...activeLayer }, ...devices]
+
+  const handleDeleteLayer = () => {
+    let _layers = layers.filter(layer => layer.id !== activeLayer.id)
+    setLayers(_layers)
+    
+    let _devices = [...devices]
+    _devices.push({ ...activeLayer, ["Location X"]: "", ["Location Y"]: "" })
+
+    setDevices(_devices)
+    setActiveLayerID()
+    let _importJson = { ...importJson }
+    _importJson[board.name] = [..._layers, ..._devices]
+    setImportJson(_importJson)
+  }
+
   return (
     <React.Fragment>
       <div style={{ display: 'flex', marginBottom: 20 }}>
@@ -28,7 +54,7 @@ const BasicProperties = ({ activeLayer, devices }) => {
         />
       </div>
 
-      <FormControl variant="outlined" fullWidth>
+      <FormControl style={{ marginBottom: 20 }} variant="outlined" fullWidth>
         <InputLabel>Device</InputLabel>
         <Select
           value={activeLayer.Device}
@@ -44,6 +70,8 @@ const BasicProperties = ({ activeLayer, devices }) => {
           }
         </Select>
       </FormControl>
+
+      <Button color="primary" variant="outlined" onClick={handleDeleteLayer}>刪除</Button>
     </React.Fragment>
   )
 }
@@ -57,7 +85,17 @@ const BoardProperties = ({ board }) => {
     </div>
   )
 }
-export default ({ layers, setLayers, activeLayerID, board, devices }) => {
+export default ({
+  layers,
+  setLayers,
+  activeLayerID,
+  board,
+  devices,
+  setActiveLayerID,
+  setDevices,
+  importJson,
+  setImportJson
+}) => {
   const activeLayer = layers.find(layer => layer.id === activeLayerID) || null
   // console.log(activeLayerID)
   return (
@@ -70,7 +108,17 @@ export default ({ layers, setLayers, activeLayerID, board, devices }) => {
       <h2 style={{ marginBottom: 20 }}>{`Devices: ${layers.length}/${devices.length + layers.length}`}</h2>
       {
         activeLayerID
-          ? <BasicProperties activeLayer={activeLayer} devices={devices} />
+          ? <BasicProperties
+            devices={devices}
+            layers={layers}
+            setLayers={setLayers}
+            activeLayer={activeLayer}
+            setActiveLayerID={setActiveLayerID}
+            setDevices={setDevices}
+            importJson={importJson}
+            setImportJson={setImportJson}
+            board={board}
+          />
           : <BoardProperties board={board} />
       }
     </div>
