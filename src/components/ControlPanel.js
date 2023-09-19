@@ -80,7 +80,6 @@ const BoardProperties = ({ board }) => {
   if (board === undefined) return null
   return (
     <div>
-      <h2>{board.name}</h2>
       <h3 style={{ margin: '16px 0' }}>{`Width: ${Math.floor(board.width)}`}</h3>
       <h3 style={{ margin: '16px 0' }}>{`Height: ${Math.floor(board.height)}`}</h3>
     </div>
