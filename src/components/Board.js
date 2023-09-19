@@ -7,9 +7,11 @@ export default ({
   setActiveLayerID,
   board,
   setImportJson,
-  importJson
+  importJson,
+  searchDevice
 }) => {
   const boardRef = React.useRef()
+  if (board === undefined) return null
   return (
     <svg xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -36,6 +38,7 @@ export default ({
       }
       {
         layers
+          .filter(layer => layer.Device.indexOf(searchDevice) > -1)
           .map(layer =>
             <Layer
               activeLayerID={activeLayerID}

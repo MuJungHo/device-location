@@ -48,6 +48,7 @@ const BasicProperties = ({ activeLayer, devices }) => {
   )
 }
 const BoardProperties = ({ board }) => {
+  if (board === undefined) return null
   return (
     <div>
       <h2>{board.name}</h2>
@@ -66,7 +67,7 @@ export default ({ layers, setLayers, activeLayerID, board, devices }) => {
       backgroundColor: '#f1f3f7',
       padding: 20
     }}>
-      <h2 style={{ marginBottom: 20 }}>{`Devices: ${devices.length}/${devices.length + layers.length}`}</h2>
+      <h2 style={{ marginBottom: 20 }}>{`Devices: ${layers.length}/${devices.length + layers.length}`}</h2>
       {
         activeLayerID
           ? <BasicProperties activeLayer={activeLayer} devices={devices} />

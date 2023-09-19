@@ -3,12 +3,20 @@ import {
   IconButton,
   Button,
   Menu,
-  MenuItem
+  MenuItem,
+  TextField
 } from '@material-ui/core'
 import xlsx from 'xlsx'
 import devices from "../device_list.json"
 
-export default ({ setFloors, setActiveFloor, setLayers, setDevices, setImportJson }) => {
+export default ({
+  setFloors,
+  setActiveFloor,
+  setLayers,
+  setDevices,
+  setImportJson,
+  searchDevice,
+  setSearchDevice }) => {
 
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -106,6 +114,7 @@ export default ({ setFloors, setActiveFloor, setLayers, setDevices, setImportJso
         type="file"
       />
       <div>
+        <TextField variant='outlined' size="small" label="搜尋設備" value={searchDevice} onChange={e => setSearchDevice(e.target.value)} />
         <Button color="primary" variant="outlined" onClick={handleExportXLSX}>
           下載XLSX
         </Button>
