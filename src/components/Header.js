@@ -4,10 +4,12 @@ import {
   Button,
   Menu,
   MenuItem,
-  TextField
+  TextField,
+  InputAdornment
 } from '@material-ui/core'
 import xlsx from 'xlsx'
 import devices from "../device_list.json"
+import SearchIcon from '@material-ui/icons/Search';
 
 export default ({
   setFloors,
@@ -113,8 +115,18 @@ export default ({
         onChange={handleUploadPNG}
         type="file"
       />
-      <TextField variant='outlined' size="small" label="搜尋設備" value={searchDevice} onChange={e => setSearchDevice(e.target.value)} />
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+        variant='outlined'
+        size="small" label="搜尋設備" value={searchDevice} onChange={e => setSearchDevice(e.target.value)} />
 
+      <div style={{ flex: 1 }}></div>
       <div style={{ width: 360, display: 'flex', justifyContent: 'space-around' }}>
 
         <label htmlFor="contained-button-xlsx">
