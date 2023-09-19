@@ -62,10 +62,8 @@ export default () => {
     if (devices.length === 0) return
 
     setOpen(true)
-    const id = moment().unix()
     // console.log(dropRef.current.scrollLeft)
     setAddLayer({
-      id,
       "Location Y": greaterThanZero(e.clientY + dropRef.current.scrollTop - dropRef.current.offsetTop - 80 - 10),
       "Location X": greaterThanZero(e.clientX + dropRef.current.scrollLeft - dropRef.current.offsetLeft - 10),
       Device: ""
@@ -116,6 +114,16 @@ export default () => {
   const handleChangeSearchFloor = e => {
     setSearchFloor(e.target.value)
   }
+
+  const handleChangeDevice = e => {
+    const _addLayer = devices.find(device => device.Device === e.target.value)
+    setAddLayer({
+      ..._addLayer,
+      Device: e.target.value,
+      "Location Y": addLayer["Location Y"],
+      "Location X": addLayer["Location X"],
+    })
+  }
   return (
     <div style={{
       width: '100%',
@@ -153,10 +161,7 @@ export default () => {
                 value={addLayer.Device}
                 label="Device"
                 displayEmpty
-                onChange={e => setAddLayer({
-                  ...addLayer,
-                  Device: e.target.value
-                })}
+                onChange={handleChangeDevice}
               >
                 {
                   devices.map(option => <MenuItem
