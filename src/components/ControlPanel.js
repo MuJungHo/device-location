@@ -97,7 +97,7 @@ export default ({
   setImportJson
 }) => {
   const activeLayer = layers.find(layer => layer.id === activeLayerID) || null
-  console.log(activeLayer)
+  // console.log(activeLayer)
   return (
     <div style={{
       width: 380,

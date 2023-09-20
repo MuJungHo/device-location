@@ -2,8 +2,6 @@ import React from "react";
 import Board from './components/Board'
 import ControlPanel from './components/ControlPanel'
 import Header from './components/Header'
-import moment from 'moment'
-
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -39,7 +37,7 @@ export default () => {
   const handleChange = (event, newValue) => {
     setActiveFloor(floors[newValue])
     setValue(newValue);
-    let _temp = importJson[floors[newValue].name]
+    let _temp = importJson[floors[newValue].name] || []
     let _layers = []
     let _devices = []
     for (let i = 0; i < _temp.length; i++) {
@@ -68,7 +66,7 @@ export default () => {
       "Location X": greaterThanZero(e.clientX + dropRef.current.scrollLeft - dropRef.current.offsetLeft - 10),
       Device: ""
     })
-  }
+  };
   const greaterThanZero = num => num < 0 ? 0 : num
 
   const handleAddLayer = () => {
@@ -94,7 +92,7 @@ export default () => {
     if (index < 0) index = 0
     setActiveFloor(floors[index])
     setValue(index);
-    let _temp = importJson[floors[index].name]
+    let _temp = importJson[floors[index].name] || []
     let _layers = []
     let _devices = []
     for (let i = 0; i < _temp.length; i++) {
@@ -191,6 +189,8 @@ export default () => {
         setImportJson={setImportJson}
         searchDevice={searchDevice}
         setSearchDevice={setSearchDevice}
+        activeFloor={activeFloor}
+        importJson={importJson}
       />
       <div
         style={{
