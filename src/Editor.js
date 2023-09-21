@@ -126,7 +126,7 @@ export default () => {
     <div style={{
       width: '100%',
       height: '100vh',
-      backgroundColor: 'rgba(0, 0, 0, 0.13)'
+      backgroundColor: 'rgba(0, 0, 0, 0.1)'
     }}>
 
       <Dialog
@@ -199,7 +199,7 @@ export default () => {
           display: 'flex',
         }}>
         <div >
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', height: 56, alignItems: 'center' }}>
             <Tabs
               style={{ width: 'calc(100vw - 500px)' }}
               value={floorIndex}
@@ -216,7 +216,7 @@ export default () => {
               }
             </Tabs>
             < TextField
-              style={{ margin: 'auto', marginRight: 5 }}
+              style={{ marginRight: 16, }}
               label="搜尋樓層" size="small" variant="outlined" value={searchFloor}
               onChange={handleChangeSearchFloor} />
           </div>
@@ -226,7 +226,10 @@ export default () => {
             style={{
               width: 'calc(100vw - 360px)',
               overflow: 'scroll',
-              height: 'calc(100vh - 125px)',
+              height: 'calc(100vh - 150px)',
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+              marginLeft: 16,
+              marginRight: 16,
             }}
           >
             <Board

@@ -8,6 +8,8 @@ import {
   Button
 } from '@material-ui/core'
 
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+
 const BasicProperties = ({
   activeLayer,
   devices,
@@ -36,19 +38,34 @@ const BasicProperties = ({
     setImportJson(_importJson)
   }
 
+  const handleUpdateLayer = (key, value) => {
+    let _layers = layers.map(layer => {
+      return layer.id === activeLayer.id
+        ? { ...layer, [key]: value }
+        : { ...layer }
+    })
+    setLayers(_layers)
+
+    let _importJson = { ...importJson }
+    _importJson[board.name] = [..._layers, ...devices]
+    setImportJson(_importJson)
+  }
+
   return (
     <React.Fragment>
       <div style={{ display: 'flex', marginBottom: 20 }}>
         <TextField
           label="Location X"
-          type="text"
+          type="number"
           variant="outlined"
+          onChange={e => handleUpdateLayer("Location X", Number(e.target.value))}
           value={activeLayer["Location X"] || ""}
         />
         <TextField
           label="Location Y"
-          type="text"
+          type="number"
           variant="outlined"
+          onChange={e => handleUpdateLayer("Location Y", Number(e.target.value))}
           style={{ marginLeft: 20 }}
           value={activeLayer["Location Y"] || ""}
         />
@@ -97,7 +114,7 @@ export default ({
   setImportJson
 }) => {
   const activeLayer = layers.find(layer => layer.id === activeLayerID) || null
-  // console.log(activeLayer)
+  console.log(board)
   return (
     <div style={{
       width: 380,
@@ -105,21 +122,28 @@ export default ({
       backgroundColor: 'white',
       padding: 20
     }}>
-      <h2 style={{ marginBottom: 20 }}>{`Devices: ${layers.length}/${devices.length + layers.length}`}</h2>
       {
-        activeLayerID
-          ? <BasicProperties
-            devices={devices}
-            layers={layers}
-            setLayers={setLayers}
-            activeLayer={activeLayer}
-            setActiveLayerID={setActiveLayerID}
-            setDevices={setDevices}
-            importJson={importJson}
-            setImportJson={setImportJson}
-            board={board}
-          />
-          : <BoardProperties board={board} />
+        Object.keys(board).length > 0 ?
+          <React.Fragment>
+            <h2 style={{ marginBottom: 20 }}>{`Name: ${board.name}`}</h2>
+            <h2 style={{ marginBottom: 20 }}>{`Devices: ${layers.length}/${devices.length + layers.length}`}</h2>
+            {
+              activeLayerID
+                ? <BasicProperties
+                  devices={devices}
+                  layers={layers}
+                  setLayers={setLayers}
+                  activeLayer={activeLayer}
+                  setActiveLayerID={setActiveLayerID}
+                  setDevices={setDevices}
+                  importJson={importJson}
+                  setImportJson={setImportJson}
+                  board={board}
+                />
+                : <BoardProperties board={board} />
+            }
+          </React.Fragment>
+          : <h4><ArrowUpwardIcon />請上傳樓層與設備</h4>
       }
     </div>
   )
