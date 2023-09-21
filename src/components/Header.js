@@ -112,7 +112,7 @@ export default ({
     })
     // return
     let sheet = xlsx.utils.aoa_to_sheet(sheetData)
-    xlsx.utils.book_append_sheet(wb, sheet, '123')
+    xlsx.utils.book_append_sheet(wb, sheet, 'Device')
     let workbookBlob = workbookToBlob(wb)
 
     if (typeof workbookBlob == "object" && workbookBlob instanceof Blob) {
