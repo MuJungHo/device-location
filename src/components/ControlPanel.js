@@ -114,12 +114,12 @@ export default ({
   setImportJson
 }) => {
   const activeLayer = layers.find(layer => layer.id === activeLayerID) || null
-  console.log(board)
+  // console.log(board)
   return (
     <div style={{
       width: 380,
       height: 'calc(100vh - 80px)',
-      backgroundColor: 'white',
+      backgroundColor: '#f1f3f7',
       padding: 20
     }}>
       {
