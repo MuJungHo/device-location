@@ -223,7 +223,7 @@ export default ({
         size="small" label="搜尋設備" value={searchDevice} onChange={e => setSearchDevice(e.target.value)} />
 
       <div style={{ flex: 1 }}></div>
-      <div style={{ width: 360, display: 'flex', justifyContent: 'space-around' }}>
+      <div style={{ width: 340, display: 'flex', justifyContent: 'space-around' }}>
 
         <label htmlFor="contained-button-png">
           <Button color="primary" variant="outlined" component="span">
