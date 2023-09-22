@@ -62,8 +62,8 @@ export default ({
     >
       <image
         xlinkHref={activeLayerID === layer.id ? './assets/images/location-blue.svg' : './assets/images/location.svg'}
-        x={layer["Location X"]}
-        y={layer["Location Y"]}
+        x={layer["Location X"] - 10}
+        y={layer["Location Y"] - 20}
         width={20}
         height={20}
         onMouseDown={startDrag}
