@@ -33,8 +33,8 @@ export default ({
       }
       else return { ...layer }
     })
-    // console.log()
     setImportJson(_importJson)
+    localStorage.setItem("importJson", JSON.stringify(_importJson))
   }
   const startDrag = e => {
     e.stopPropagation()

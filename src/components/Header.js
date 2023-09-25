@@ -8,8 +8,16 @@ import {
   InputAdornment
 } from '@material-ui/core'
 import xlsx from 'xlsx'
-import devices from "../device_list.json"
 import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
+import SettingsIcon from '@material-ui/icons/Settings';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import PublishIcon from '@material-ui/icons/Publish';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default ({
   setFloors,
@@ -23,6 +31,18 @@ export default ({
   activeFloor
 }) => {
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const inputPngRef = React.useRef(null);
+  const inputXlsxRef = React.useRef(null);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -70,8 +90,17 @@ export default ({
       }
       setDevices(_devices)
       setLayers(_layers)
-      // setImportJson(devices)
     }
+  }
+
+  const handleClearStorage = () => {
+    setFloors([])
+    setActiveFloor({})
+    setDevices([])
+    setLayers([])
+    setImportJson({})
+    localStorage.clear()
+    setOpen(false)
   }
 
   const handleExportXLSX = () => {
@@ -154,6 +183,7 @@ export default ({
     }
 
     setImportJson(_importJson)
+    localStorage.setItem("importJson", JSON.stringify(_importJson))
 
     let _temp = _importJson[activeFloor.name] || []
     let _layers = []
@@ -198,7 +228,7 @@ export default ({
       <input
         accept="image/png"
         style={{ display: 'none' }}
-        id="contained-button-png"
+        ref={inputPngRef}
         multiple
         onChange={handleUploadPNG}
         type="file"
@@ -206,7 +236,7 @@ export default ({
       <input
         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         style={{ display: 'none' }}
-        id="contained-button-xlsx"
+        ref={inputXlsxRef}
         // multiple
         onChange={handleUploadXLSX}
         type="file"
@@ -224,21 +254,55 @@ export default ({
 
       <div style={{ flex: 1 }}></div>
       <div style={{ width: 340, display: 'flex', justifyContent: 'space-around' }}>
-
-        <label htmlFor="contained-button-png">
-          <Button color="primary" variant="outlined" component="span">
-            上傳樓層
-          </Button>
-        </label>
-        <label htmlFor="contained-button-xlsx">
-          <Button color="primary" variant="outlined" component="span">
-            上傳設備
-          </Button>
-        </label>
+        <Button color="primary" variant="contained" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+          <PublishIcon />
+          上傳
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={() => {
+            inputPngRef.current.click()
+            handleClose()
+          }}>樓層</MenuItem>
+          <MenuItem onClick={() => {
+            inputXlsxRef.current.click()
+            handleClose()
+          }}>設備</MenuItem>
+        </Menu>
         <Button color="primary" variant="contained" onClick={handleExportXLSX}>
-          下載XLSX
+          <GetAppIcon />
+          下載
+        </Button>
+        <Button color="secondary" variant="contained" onClick={() => setOpen(true)}>
+          <ClearIcon />
+          清除
         </Button>
       </div>
+
+      <Dialog
+        open={open}
+        fullWidth
+        maxWidth="sm"
+        onClose={() => setOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"確認清除資料？"}</DialogTitle>
+
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>
+            Disagree
+          </Button>
+          <Button variant="contained" onClick={handleClearStorage} color="secondary" autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       {/* <IconButton style={{ marginRight: 10 }} onClick={exportJsonFile}><CloudDownloadIcon /></IconButton> */}
     </div>
   )

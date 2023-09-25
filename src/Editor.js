@@ -22,7 +22,7 @@ import {
 
 export default () => {
   const dropRef = React.useRef()
-  const [importJson, setImportJson] = React.useState({})
+  const [importJson, setImportJson] = React.useState(localStorage.getItem("importJson") ? JSON.parse(localStorage.getItem("importJson")) : {})
   const [layers, setLayers] = React.useState([])
   const [activeLayerID, setActiveLayerID] = React.useState()
   const [activeFloor, setActiveFloor] = React.useState({})
@@ -83,6 +83,7 @@ export default () => {
     }]
     // console.log()
     setImportJson(_importJson)
+    localStorage.setItem("importJson", JSON.stringify(_importJson))
     setOpen(false)
   }
   // console.log(_devices)

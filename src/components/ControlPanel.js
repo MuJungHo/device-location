@@ -36,6 +36,7 @@ const BasicProperties = ({
     let _importJson = { ...importJson }
     _importJson[board.name] = [..._layers, ..._devices]
     setImportJson(_importJson)
+    localStorage.setItem("importJson", JSON.stringify(_importJson))
   }
 
   const handleUpdateLayer = (key, value) => {
@@ -49,6 +50,7 @@ const BasicProperties = ({
     let _importJson = { ...importJson }
     _importJson[board.name] = [..._layers, ...devices]
     setImportJson(_importJson)
+    localStorage.setItem("importJson", JSON.stringify(_importJson))
   }
 
   return (
