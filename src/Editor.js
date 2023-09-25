@@ -88,26 +88,27 @@ export default () => {
   // console.log(_devices)
   React.useEffect(() => {
     if (floors.length === 0) return
-    let index = floors.findIndex(floor => floor.name.indexOf(searchFloor) > -1)
-    if (index < 0) index = 0
-    setActiveFloor(floors[index])
-    setValue(index);
-    let _temp = importJson[floors[index].name] || []
-    let _layers = []
-    let _devices = []
-    for (let i = 0; i < _temp.length; i++) {
-      if (_temp[i]["Location X"] && _temp[i]["Location Y"]) {
-        _layers.push({
-          ..._temp[i],
-        })
-      } else {
-        _devices.push(_temp[i])
+    let _floor = floors.filter(floor => floor.name.indexOf(searchFloor) > -1)
+    if (_floor.length > 0) {
+      setActiveFloor(_floor[0])
+      setValue(0);
+      let _temp = importJson[_floor[0].name] || []
+      let _layers = []
+      let _devices = []
+      for (let i = 0; i < _temp.length; i++) {
+        if (_temp[i]["Location X"] && _temp[i]["Location Y"]) {
+          _layers.push({
+            ..._temp[i],
+          })
+        } else {
+          _devices.push(_temp[i])
+        }
       }
+      setDevices(_devices)
+      setLayers(_layers)
+      setActiveLayerID()
     }
-    setDevices(_devices)
-    setLayers(_layers)
-    setActiveLayerID()
-    // console.log(index)
+
   }, [searchFloor])
   const handleChangeSearchFloor = e => {
     setSearchFloor(e.target.value)
@@ -176,7 +177,7 @@ export default () => {
           <Button onClick={() => setOpen(false)} color="primary">
             Disagree
           </Button>
-          <Button onClick={handleAddLayer} color="primary" autoFocus>
+          <Button variant="contained" onClick={handleAddLayer} color="primary" autoFocus>
             Agree
           </Button>
         </DialogActions>
@@ -211,7 +212,7 @@ export default () => {
             >
               {
                 floors
-                  // .filter(floor => floor.name.indexOf(searchFloor) > -1)
+                  .filter(floor => floor.name.indexOf(searchFloor) > -1)
                   .map(floor => <Tab key={floor.name} label={floor.name} />)
               }
             </Tabs>
