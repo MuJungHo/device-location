@@ -91,6 +91,7 @@ export default ({
       setDevices(_devices)
       setLayers(_layers)
     }
+    inputPngRef.current.value = null
   }
 
   const handleClearStorage = () => {
