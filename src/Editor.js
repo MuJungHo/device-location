@@ -156,7 +156,7 @@ export default () => {
               />
             </div>
             <FormControl variant="outlined" fullWidth>
-              <InputLabel>Device</InputLabel>
+              <InputLabel>Device *</InputLabel>
               <Select
                 value={addLayer.Device}
                 label="Device"
@@ -178,7 +178,7 @@ export default () => {
           <Button onClick={() => setOpen(false)} color="primary">
             Disagree
           </Button>
-          <Button variant="contained" onClick={handleAddLayer} color="primary" autoFocus>
+          <Button disabled={addLayer.Device === ""} variant="contained" onClick={handleAddLayer} color="primary" autoFocus>
             Agree
           </Button>
         </DialogActions>
